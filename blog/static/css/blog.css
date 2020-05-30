@@ -1,0 +1,18 @@
+hr .post_under_bar {
+    color: #FF2D00;
+    height: 2px;
+}
+
+.post_title_link {
+    color: #FF6C00;
+}
+
+h1 {
+    font-family: 'Lobster', cursive;
+    color: #FF2D00
+}
+
+p {
+    font-family: 'Chelsea Market', cursive;
+    font-size: 18px;
+}
