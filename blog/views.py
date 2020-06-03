@@ -11,22 +11,22 @@ def index(request):
     if not posts:
         return HttpResponse("There is no posts do view for now.")
     else :
-        return render(request, 'blog/post_index.html', {'posts':posts})
+        return render(request, 'blog/post_index.html', {'posts':posts, 'pagename':'Blog'})
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'post':post})
+    return render(request, 'blog/post_detail.html', {'post':post, 'pagename':'Post ' + str(post.id)})
 
 def new_post(request):
-    """if request.method == "POST":
+    #form = PostForm()
+    if request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
             post.published_date = timezone.now()
             post.save()
-            return redirect('post_detail', pk=post.pk)
+            return redirect('/blog/post/'+ str(post.pk) + '/', pk=post.pk)
     else:
         form = PostForm()
-    return render(request, 'blog/post_index.html', {'form': form})"""
-    return HttpResponse("This is the new post page")
+    return render(request, 'blog/new_post.html', {'form':form})

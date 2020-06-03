@@ -1,28 +1,16 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-        <link href="//fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-        <title class='page_banner_title'>UoB Blog Site</title>
-    </head>
-    <body>
-        <h1>UoB Hosting Site Coursework</h1>
+{% extends 'blog/blog_template.html' %}
+
+{% block content %}
         {% if user.is_authenticated %}
             <a class="btn btn-default" href="post/new/"><span class="glyphicon glyphicon-plus"></span></a>
         {% endif %}
         {% for post in posts %}
             <div class='post_view'>
-                <p class='post_info'>{{ post.author }}<!-- <-link to the user's information page, link to post details-> ---> | <a class="post_title_link" href="post/{{post.id}}/">{{ post.title }}</a> | {{ post.published_date }} </p>
+                <p class='post_info'>{{ post.author }} | <a class="post_title_link" href="post/{{post.id}}/">{{ post.title }}</a> | {{ post.published_date }} </p>
                 <div class='post_content'>
                     <p>{{ post.text }}</p>
                 </div>
             </div>
-            <hr class'post_under_bar'>
+            <hr>
         {% endfor %}
-    </body>
-</html>
+{% endblock %}

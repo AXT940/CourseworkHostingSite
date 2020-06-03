@@ -1,6 +1,11 @@
-hr .post_under_bar {
+body {
+    margin-top: auto;
+    margin-left: 10px;
+}
+
+hr {
     color: #FF2D00;
-    height: 2px;
+    height: 10px;
 }
 
 .post_title_link {
@@ -9,7 +14,7 @@ hr .post_under_bar {
 
 h1 {
     font-family: 'Lobster', cursive;
-    color: #FF2D00
+    color: #000FFF;
 }
 
 p {

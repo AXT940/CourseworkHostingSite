@@ -1,19 +1,21 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en" dir="ltr">
     <head>
+        <meta charset="utf-8">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
         <link href="//fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-        <title>New Post</title>
+        <title class='page_banner_title'>{{ pagename }}|UoB Blog Site</title>
     </head>
     <body>
-        <h1>New Blog Post</h1>
-        <form method="POST" class="post-form">{% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="save btn btn-default">Save</button>
-        </form>
+        <div class="page_links">
+            <p><a href="{% url 'coverTools:homepage' %}">Home</a> <a href="{%url 'blog:post_index'%}">Blog</a></p>
+        </div>
+        <h1><a href="{%url 'blog:post_index'%}">UoB Hosting Site Coursework</a></h1>
+        {% block content%}
+        {% endblock %}
     </body>
 </html>
