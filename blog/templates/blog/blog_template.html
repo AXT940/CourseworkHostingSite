@@ -8,13 +8,13 @@
         <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
         <link href="//fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-        <title class='page_banner_title'>{{ pagename }}|UoB Blog Site</title>
+        <title>{{ pagename }}|UoB Blog Site</title>
     </head>
     <body>
         <div class="page_links">
             <p><a href="{% url 'coverTools:homepage' %}">Home</a> <a href="{%url 'blog:post_index'%}">Blog</a></p>
         </div>
-        <h1><a href="{%url 'blog:post_index'%}">UoB Hosting Site Coursework</a></h1>
+        <h1><a href="{%url 'coverTools:homepage'%}" class="page_header">UoB Hosting Site Coursework</a></h1>
         {% block content%}
         {% endblock %}
     </body>

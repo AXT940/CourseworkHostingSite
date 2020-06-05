@@ -8,13 +8,13 @@ hr {
     height: 10px;
 }
 
-.post_title_link {
+.post_links {
     color: #FF6C00;
 }
 
-h1 {
+h1 .page_header {
     font-family: 'Lobster', cursive;
-    color: #000FFF;
+    color: #2EBD17;
 }
 
 p {

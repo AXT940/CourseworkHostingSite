@@ -1,9 +1,11 @@
 {% extends 'blog/blog_template.html' %}
 
 {%block content%}
-        <h3>Posted by: {{ post.author }}</h3>
-        <h2><b>Title: {{ post.title }}</b></<h2>
-        <div class='post_content'>
-            <p>{{ post.text }}</p><br>
-        </div>
+    <a class="btn btn-default" href="{% url 'blog:edit_post' pk=post.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
+    <h3>Posted by: {{ post.author }}</h3>
+    <h2><b>Title: {{ post.title }}</b></<h2>
+    <div class='post_content'>
+        <p>{{ post.text }}</p><br>
+    </div>
+    <p><a class="page_links" href="{% url 'blog:post_index' %}">Back</a></p>
 {%endblock%}
