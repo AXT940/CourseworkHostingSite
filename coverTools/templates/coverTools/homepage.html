@@ -1,4 +1,21 @@
 {% extends 'blog/blog_template.html' %}
 
 {% block content %}
+    <div>
+        <div class="boxed_content" id='login_register_box'>
+            <h3>Log in.</h3>
+            <p>Log in to create and edit posts.</p>
+            <button type="button" name="button" class="login button"><a href="{% url 'coverTools:login' %}" class="button_link">Log in --></a></button><br>
+            <h3>Register.</h3>
+            <p>Register to create content.</p>
+            <button type="button" name="button" class="register button"><a href="{% url 'coverTools:register' %}" class="button_link">Register --></a></button>
+        </div>
+        <br>
+        <div class="boxed_content" id='blog_box'>
+            <h3>Blog.</h3>
+            <p>View blog posts.</p>
+            <button type="button" name="button" class="blog button"><a href="{% url 'blog:post_index' %}" class="button_link">Go to blog --></a></button>
+            <p></p>
+        </div>
+    </div>
 {% endblock %}
