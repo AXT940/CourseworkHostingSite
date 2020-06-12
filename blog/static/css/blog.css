@@ -3,6 +3,11 @@ body {
     margin-left: 10px;
 }
 
+table {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
 hr {
     color: #FF2D00;
     height: 10px;
@@ -36,10 +41,15 @@ p {
 
 .button{
     border: 2px solid blue;
-    padding: 14px 28px;
+    padding: 10px 24px;
     font-size: 16px;
     cursor: pointer;
     display: inline-block;
 }
 
 .button:hover {background: #eee;}
+
+.submit_button {
+    font-size: 20px;
+    margin-top: : 5px;
+}

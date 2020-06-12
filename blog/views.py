@@ -7,7 +7,7 @@ from .models import Post
 # Create your views here.
 
 def index(request):
-    posts = Post.objects.all().order_by('published_date')
+    posts = reversed(Post.objects.all().order_by('published_date'))
     if not posts:
         return HttpResponse("There is no posts do view for now.")
     else :

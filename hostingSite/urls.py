@@ -21,4 +21,5 @@ urlpatterns = [
     path('', include('coverTools.urls')),
     path('blog/', include('blog.urls')),
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls'))
 ]

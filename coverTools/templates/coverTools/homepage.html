@@ -3,19 +3,24 @@
 {% block content %}
     <div>
         <div class="boxed_content" id='login_register_box'>
-            <h3>Log in.</h3>
-            <p>Log in to create and edit posts.</p>
-            <button type="button" name="button" class="login button"><a href="{% url 'coverTools:login' %}" class="button_link">Log in --></a></button><br>
-            <h3>Register.</h3>
-            <p>Register to create content.</p>
-            <button type="button" name="button" class="register button"><a href="{% url 'coverTools:register' %}" class="button_link">Register --></a></button>
+            {% if user.is_authenticated %}
+                <h3>Log out.</h3>
+                <p>Logged in as: <a href="{% url 'coverTools:user_details' request.user.username %}">{{ request.user.username }}</a>.</p>
+                <button type="button" name="button" class="logout button"><a href="{% url 'logout' %}" class="button_link">Log out --></a></button>
+            {% else %}
+                <h3>Log in.</h3>
+                <p>Log in to create and edit posts.</p>
+                <button type="button" name="button" class="login button"><a href="{% url 'login' %}" class="button_link">Log in --></a></button><br>
+                <h3>Register.</h3>
+                <p>Register to create content.</p>
+                <button type="button" name="button" class="register button"><a href="{% url 'coverTools:register' %}" class="button_link">Register --></a></button>
+            {% endif %}
         </div>
         <br>
         <div class="boxed_content" id='blog_box'>
             <h3>Blog.</h3>
             <p>View blog posts.</p>
             <button type="button" name="button" class="blog button"><a href="{% url 'blog:post_index' %}" class="button_link">Go to blog --></a></button>
-            <p></p>
         </div>
     </div>
 {% endblock %}
