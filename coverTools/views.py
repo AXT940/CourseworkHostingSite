@@ -53,7 +53,7 @@ def delete_user(request, username):
                 return redirect('coverTools:homepage')
     else:
         form = DeleteForm()
-    return render(request, 'coverTools/delete_user.html', {'pagename':'Delete '+ str(username), 'form':form,})
+    return render(request, 'coverTools/delete_user.html', {'pagename':'Delete '+ str(username), 'form':form, 'delete':True})
 
 def get_user(username):
     try:

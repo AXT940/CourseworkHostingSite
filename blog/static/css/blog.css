@@ -58,6 +58,10 @@ p {
     display: inline-block;
 }
 
+tr {
+    font-size: 18px;
+}
+
 .button:hover {background: #eee;}
 
 .submit_button {

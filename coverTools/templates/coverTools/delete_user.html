@@ -1,12 +1,6 @@
 {% extends 'blog/blog_template.html' %}
 
 {% block content %}
-    <style>
-        label {font-size:18px; margin-right:5px;}
-        tr {font-size: 18px;}
-        input {font-size: 18px;}
-    </style>
-
     <h2>Delete Your Account<h2>
     <form class="" method="post">
         {% csrf_token %}

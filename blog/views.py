@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.utils import timezone
 from .forms import PostForm
 from django.http import HttpResponse
 
+from .forms import DeletePostForm
 from .models import Post
 # Create your views here.
 
@@ -44,3 +45,13 @@ def post_edit(request, pk):
         else:
             form = PostForm(instance=post)
         return render(request, 'blog/post_edit.html', {'form': form, 'pagename':'Edit'})
+
+def delete_post(request, pk):
+    form = DeletePostForm()
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        form = DeletePostForm(request.POST)
+        if form.is_valid():
+            post.delete()
+            return redirect('blog:post_index')
+    return render(request, 'blog/post_detail.html', {'post':post, 'form':form, 'pagename':'Delete Post', 'delete':True})

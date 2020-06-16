@@ -1,8 +1,24 @@
 {% extends 'blog/blog_template.html' %}
 
 {%block content%}
-    {% if post.author == request.user %}
+    <style>
+        tr {font-size: 18px;}
+        input {font-size: 18px;}
+    </style>
+
+    {% if post.author == request.user and user.is_authenticated %}
         <a class="btn btn-default" href="{% url 'blog:edit_post' pk=post.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
+        <a class="btn btn-default" href="{% url 'blog:delete_post' pk=post.id %}"><span class="glyphicon glyphicon-trash"></span></a>
+    {% endif %}
+    {% if delete %}
+        <form class="delete_form" method="post">
+            {% csrf_token %}
+            <table>
+                <tr>{{ form.delete_confirm.label }}</tr><br>
+                <tr>Confirm: {{ form.delete_confirm }}</tr>
+            </table>
+            <input type="Submit" value="submit">
+        </form>
     {% endif %}
     <h3>Posted by: {{ post.author }}</h3>
     <h2><b>Title: {{ post.title }}</b></<h2>
