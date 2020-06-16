@@ -10,7 +10,12 @@ table {
 
 hr {
     color: #FF2D00;
+    weight: 10px;
     height: 10px;
+}
+
+.post_info {
+    font-size: 22px;
 }
 
 .post_links {
@@ -20,6 +25,12 @@ hr {
 h1 .page_header {
     font-family: 'Lobster', cursive;
     color: #2EBD17;
+}
+
+h2 {
+    font-style: italic;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
 }
 
 h3 {

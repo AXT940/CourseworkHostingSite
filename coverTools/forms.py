@@ -10,3 +10,8 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2',)
+
+class DeleteForm(forms.Form):
+    delete_confirm = forms.BooleanField(initial=False, label="Please confirm that you wish to delete your account.")
+    username = forms.CharField(max_length=15, label="Enter your username")
+    password = forms.CharField(max_length=25, widget = forms.PasswordInput(), label="Enter your password")

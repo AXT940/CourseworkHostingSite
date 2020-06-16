@@ -2,5 +2,21 @@
 
 {% block content %}
     <h2>{{pagename}}</h2>
-
+    <p>Date joined: {{ date_joined }}</p>
+    <p>Number of posts: {{ num_posts }}</p>
+    <p>Last post: {{ last_post_date }}</p>
+    {% if pagename == request.user.username %}<a class="btn btn-default" href="{% url 'blog:new_post' %}"><span class="glyphicon glyphicon-plus"></span></a><br>{% endif %}
+    {% for post in posts %}
+        <div class='post_view'>
+            <p class='post_info'><a href="{% url 'coverTools:user_details' request.user.username %}">{{ post.author }}</a> | <a class="post_links" href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a> | {{ post.published_date }} </p>
+            <div class='post_content'>
+                <p>{{ post.text }}</p>
+            </div>
+        </div>
+        <hr>
+    {% endfor %}
+    {% if pagename == request.user.username %}
+        <p><a href="{% url 'coverTools:delete_user' request.user.username %}">Delete Account: <span class="glyphicon glyphicon-trash"></span></a></p>
+    {% endif %}
+    <a href="{% url 'blog:post_index' %}">Return to Blog</a>
 {% endblock %}
