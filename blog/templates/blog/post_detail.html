@@ -20,10 +20,10 @@
             <input type="Submit" value="submit">
         </form>
     {% endif %}
-    <h3>Posted by: {{ post.author }}</h3>
+    <h3>Posted by: {{ post.author }} on {{ post.published_date }}</h3>
     <h2><b>Title: {{ post.title }}</b></<h2>
     <div class='post_content'>
-        <p>{{ post.text }}</p><br>
+        <br><p>{{ post.text }}</p><br>
     </div>
-    <p><a class="page_links" href="{% url 'blog:post_index' %}">Return to Blog</a></p>
+    <input type=button value="Back" class="back_link" onClick="javascript:history.go(-1);">
 {%endblock%}

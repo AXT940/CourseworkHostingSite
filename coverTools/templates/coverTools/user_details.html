@@ -18,5 +18,4 @@
     {% if pagename == request.user.username %}
         <p><a href="{% url 'coverTools:delete_user' request.user.username %}">Delete Account: <span class="glyphicon glyphicon-trash"></span></a></p>
     {% endif %}
-    <a href="{% url 'blog:post_index' %}">Return to Blog</a>
 {% endblock %}
