@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.core.paginator import Paginator
 
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
@@ -34,11 +35,14 @@ def user_details(request, username):
     user_name = username
     user = User.objects.get(username=user_name)
     posts = Post.objects.all().filter(author=user).order_by('published_date')
+    pages = Paginator(posts, 10) #page of 10 posts each
+    page_number = request.GET.get('page')
+    objs_for_page = pages.get_page(page_number)
     if len(posts) == 0:
         last_post = 'No posts created.'
     else:
         last_post = posts[0].published_date
-    return render(request, 'coverTools/user_details.html', {'pagename':username, 'posts':posts, 'last_post_date':last_post, 'num_posts':len(posts), 'date_joined':user.date_joined.date()})
+    return render(request, 'coverTools/user_details.html', {'pagename':username, 'posts':objs_for_page, 'last_post_date':last_post, 'num_posts':len(posts), 'date_joined':user.date_joined.date(), 'paginator':pages,})
 
 def delete_user(request, username):
     form = DeleteForm()

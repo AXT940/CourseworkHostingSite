@@ -19,3 +19,15 @@
         <p><a href="{% url 'coverTools:delete_user' request.user.username %}">Delete Account: <span class="glyphicon glyphicon-trash"></span></a></p>
     {% endif %}
 {% endblock %}
+{% block post_index_buttons %}
+        {% if posts.has_previous %}
+            <a class="next_button" href="?page={{ posts.previous_page_number }}"><button>Previous</button></a>
+            {% if not posts.has_next %}
+                <br><br>
+            {% endif %}
+        {% endif %}
+        {% if posts.has_next %}
+            <a class="next_button" href="?page={{ posts.next_page_number }}"><button type="button">Next</button></a><br><br>
+        {% endif %}
+    <input type=button value="Return" class="back_link" onClick="javascript:history.go(-1);">
+{% endblock %}

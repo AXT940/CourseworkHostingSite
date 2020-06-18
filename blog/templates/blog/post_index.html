@@ -8,9 +8,23 @@
             <div class='post_view'>
                 <p class='post_info'><a href="{% url 'coverTools:user_details' post.author %}">{{ post.author }}</a> | <a class="post_links" href="post/{{post.id}}/">{{ post.title }}</a> | {{ post.published_date }} </p>
                 <div class='post_content'>
-                    <p>{{ post.text }}</p>
+                    {{ post.text | linebreaks }}
                 </div>
             </div>
             <hr>
         {% endfor %}
+{% endblock %}
+{% block post_index_buttons %}
+    {% if pagename == 'Blog' %}
+        {% if posts.has_previous %}
+            <a class="next_button" href="?page={{ posts.previous_page_number }}"><button>Previous</button></a>
+            {% if not posts.has_next %}
+                <br><br>
+            {% endif %}
+        {% endif %}
+        {% if posts.has_next %}
+            <a class="next_button" href="?page={{ posts.next_page_number }}"><button type="button">Next</button></a><br><br>
+        {% endif %}
+    {% endif %}
+    <input type=button value="Return" class="back_link" onClick="javascript:history.go(-1);">
 {% endblock %}

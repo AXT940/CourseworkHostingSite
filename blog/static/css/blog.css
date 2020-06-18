@@ -68,3 +68,7 @@ tr {
     font-size: 20px;
     margin-top: : 5px;
 }
+
+.next_button {
+    color: #000;
+}

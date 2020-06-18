@@ -2,17 +2,21 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.utils import timezone
 from .forms import PostForm
 from django.http import HttpResponse
+from django.core.paginator import Paginator
 
 from .forms import DeletePostForm
 from .models import Post
 # Create your views here.
 
 def index(request):
-    posts = reversed(Post.objects.all().order_by('published_date'))
+    posts = Post.objects.all().order_by('-published_date')
+    pages = Paginator(posts, 10) #page of 10 posts each
+    page_number = request.GET.get('page')
+    objs_for_page = pages.get_page(page_number)
     if not posts:
         return HttpResponse("There is no posts do view for now.")
     else :
-        return render(request, 'blog/post_index.html', {'posts':posts, 'pagename':'Blog'})
+        return render(request, 'blog/post_index.html', {'posts':objs_for_page, 'pagename':'Blog', 'paginator':pages})
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
