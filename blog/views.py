@@ -13,10 +13,7 @@ def index(request):
     pages = Paginator(posts, 10) #page of 10 posts each
     page_number = request.GET.get('page')
     objs_for_page = pages.get_page(page_number)
-    if not posts:
-        return HttpResponse("There is no posts do view for now.")
-    else :
-        return render(request, 'blog/post_index.html', {'posts':objs_for_page, 'pagename':'Blog', 'paginator':pages})
+    return render(request, 'blog/post_index.html', {'posts':objs_for_page, 'pagename':'Blog', 'paginator':pages})
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
