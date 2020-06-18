@@ -23,6 +23,6 @@
     <h3>Posted by: {{ post.author }} on {{ post.published_date }}</h3>
     <h2><b>Title: {{ post.title }}</b></<h2>
     <div class='post_content'>
-        <br><p>{{ post.text }}</p><br>
+        <br><p>{{ post.text | linebreaks }}</p><br>
     </div>
 {%endblock%}
