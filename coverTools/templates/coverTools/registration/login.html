@@ -37,6 +37,5 @@
     {% else %}
         <p><a href="{% url 'logout' %}">You are already logged in. Please sign out to proceed.</a></p>
     {% endif %}
-
-
+    <input type=button value="Return" class="back_link" onClick="javascript:history.go(-1);">
 {% endblock %}

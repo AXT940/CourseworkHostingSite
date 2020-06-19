@@ -1,9 +1,10 @@
 {% extends 'blog/blog_template.html' %}
 
 {% block content %}
-        <h1>New Blog Post</h1>
-        <form method="POST" class="post-form">{% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="save btn btn-default">Save</button>
-        </form>
+    <h1>New Blog Post</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+    <input type=button value="Return" class="back_link" onClick="javascript:history.go(-1);">
 {% endblock %}

@@ -18,9 +18,6 @@
         <h1><a href="{%url 'coverTools:homepage'%}" class="page_header">UoB Hosting Site Coursework</a></h1>
         {% block content%}
         {% endblock %}
-        {% if not pagename == 'Home' and not pagename == 'Blog' and not pagename == request.user.username %}
-            <input type=button value="Return" class="back_link" onClick="javascript:history.go(-1);">
-        {% endif %}
         {% block post_index_buttons %}
         {% endblock %}
     </body>
