@@ -10,8 +10,7 @@ table {
 
 hr {
     color: #FF2D00;
-    weight: 10px;
-    height: 10px;
+    size: 10px;
 }
 
 .post_info {
@@ -71,4 +70,25 @@ tr {
 
 .next_button {
     color: #000;
+}
+
+.post_comment_header {
+    margin-left: 5px;
+    font-weight: bold;
+    font-family: 'Montserrat', cursive;
+    font-size: 16px;
+}
+
+.post_comment_text {
+    margin: 10px 0px 20px 20px;
+    font-size: 16px;
+}
+
+.delete_comment_form {
+    font-size: 16px;
+    margin-left: 30px;
+}
+
+.delete_button .edit_submit_button {
+    font-size: 14px;
 }

@@ -10,6 +10,7 @@
         <a class="btn btn-default" href="{% url 'blog:edit_post' pk=post.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
         <a class="btn btn-default" href="{% url 'blog:delete_post' pk=post.id %}"><span class="glyphicon glyphicon-trash"></span></a>
     {% endif %}
+
     {% if delete %}
         <form class="delete_form" method="post">
             {% csrf_token %}
@@ -20,10 +21,45 @@
             <input type="Submit" value="submit">
         </form>
     {% endif %}
+
     <h3>Posted by: {{ post.author }} on {{ post.published_date }}</h3>
     <h2><b>Title: {{ post.title }}</b></<h2>
     <div class='post_content'>
         <br><p>{{ post.text | linebreaks }}</p><br>
     </div>
+
+    <hr>
+    {% if new_comment_writ %}
+        <h3>Comments</h3>
+        <form class="comment_form" method="POST">
+            {% csrf_token %}
+            <p>{{ form.text.label }}:</p>
+            <p>{{ form.text }}</p><br>
+            <input type="Submit" value='Submit'>
+        </form>
+    {% endif %}
+
+    <p>{% if not new_comment_writ %}{{ num_of_comments }} Comment{% if not num_of_comments == 1 %}s{% endif %}  &emsp;<a href="{% url 'blog:new_comment' pk=post.id %}" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></a>{% endif %}</p>
+    {% for comment in comments %}
+        <h4 class="post_comment_header"> <a href="{% url 'coverTools:user_details' comment.author %}">{{ comment.author }}</a> | {{ comment.published_date }} {%  if comment.author == request.user and not delete_comment %}<a href="{% url 'blog:delete_comment' pk=post.id comment_pk=comment.id %}"><span class="glyphicon glyphicon-trash"></span></a> {% endif %} {% if comment.author == request.user and not edit_comment %} <a href="{% url 'blog:edit_comment' pk=post.id comment_pk=comment.id %}"><span class="glyphicon glyphicon-pencil"></span></a>  {% endif %}</h4>
+        {% if delete_comment and comment_deleting_pk == comment.id %}
+            <form method="POST">
+                {% csrf_token %}
+                <p class="delete_comment_form">{{ form.delete_confirm.label }} Yes:{{ form.delete_confirm }} &emsp; <input class="delete_button" value="Submit" type="Submit"></p>
+            </form>
+        {% endif %}
+        {% if comment_to_edit_pk == comment.id and edit_comment %}
+            <form class="comment_form" method="POST">
+                {% csrf_token %}
+                <p>{{ form.text.label }}:</p>
+                <p>{{ form.text }}</p><br>
+                <input class="edit_submit_button" type="Submit" value='Submit' style='font-size:14px;'>
+            </form>
+        {% else %}
+            <p class="post_comment_text">{{ comment.text }}</p>
+        {% endif %}
+    {% endfor %}
+
+    <br>
     <input type=button value="Return" class="back_link" onClick="javascript:history.go(-1);">
 {%endblock%}

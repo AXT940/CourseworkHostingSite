@@ -1,11 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.utils import timezone
-from .forms import PostForm
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 
-from .forms import DeletePostForm
-from .models import Post
+from .forms import PostForm, DeletePostForm, CommentForm, DeleteCommentForm
+from .models import Post, Comment
 # Create your views here.
 
 def index(request):
@@ -17,7 +16,8 @@ def index(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'post':post, 'pagename':'Post ' + str(post.id)})
+    comments = post.post_comments.all
+    return render(request, 'blog/post_detail.html', {'post':post, 'pagename':'Post ' + str(post.id), 'comments':comments, 'num_of_comments':post.post_comments.count, 'delete_comment':False, 'edit_comment':False,})
 
 def new_post(request):
     #form = PostForm()
@@ -45,7 +45,7 @@ def post_edit(request, pk):
                 return redirect('/blog/post/'+ str(post.pk) + '/', pk=post.pk)
         else:
             form = PostForm(instance=post)
-        return render(request, 'blog/post_edit.html', {'form': form, 'pagename':'Edit'})
+        return render(request, 'blog/post_edit.html', {'form': form, 'pagename':'Edit', 'edit_comment':False,})
 
 def delete_post(request, pk):
     form = DeletePostForm()
@@ -56,3 +56,48 @@ def delete_post(request, pk):
             post.delete()
             return redirect('blog:post_index')
     return render(request, 'blog/post_detail.html', {'post':post, 'form':form, 'pagename':'Delete Post', 'delete':True})
+
+def new_comment(request, pk):
+    form = CommentForm()
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.published_date = timezone.now()
+            comment.post = post
+            comment.save()
+            return redirect('blog:post_detail', pk=pk)
+    else:
+        form = CommentForm()
+    return render(request, 'blog/post_detail.html', {'form':form, 'post':post, 'pagename':'New Comment', 'new_comment_writ':True})
+
+def delete_comment(request, comment_pk, pk):
+    post = get_object_or_404(Post, pk=pk)
+    comments = post.post_comments.all
+    if request.method == "POST":
+        form = DeleteCommentForm(request.POST)
+        if form.is_valid() and form.cleaned_data.get('delete_confirm'):
+            comment = get_object_or_404(Comment, pk=comment_pk)
+            comment.delete()
+            return redirect('blog:post_detail', pk=pk)
+    else:
+        form = DeleteCommentForm()
+    return render(request, 'blog/post_detail.html', {'form':form, 'post':post, 'pagename':'Delete Comment', 'delete_comment':True, 'edit_comment':False, 'num_of_comments':post.post_comments.count, 'comments':comments, 'comment_deleting_pk':comment_pk})
+
+def edit_comment(request, comment_pk, pk):
+    post = get_object_or_404(Post, pk=pk)
+    comments = post.post_comments.all
+    comment_to_edit = get_object_or_404(Comment, pk=comment_pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST, instance=comment_to_edit)
+        if form.is_valid():
+            form.save(commit=False)
+            comment_to_edit.author = request.user
+            comment_to_edit.published_date = timezone.now()
+            comment_to_edit.save()
+            return redirect('blog:post_detail', pk=pk)
+    else:
+        form = CommentForm(instance=comment_to_edit)
+    return render(request, 'blog/post_detail.html', {'form':form, 'post':post, 'pagename':'Edit Comment', 'edit_comment':True, 'delete_comment':False, 'num_of_comments':post.post_comments.count, 'comments':comments, 'comment_to_edit_pk':comment_pk,})
