@@ -5,7 +5,10 @@
     <p>Date joined: {{ date_joined }}</p>
     <p>Number of posts: {{ num_posts }}</p>
     <p>Last post: {{ last_post_date }}</p>
-    {% if pagename == request.user.username %}<a class="btn btn-default" href="{% url 'blog:new_post' %}"><span class="glyphicon glyphicon-plus"></span></a><br>{% endif %}
+    {% if pagename == request.user.username %}
+        <p><a class="btn btn-default" href="{% url 'blog:new_post' %}"><span class="glyphicon glyphicon-plus"></span></a>&emsp; 
+        <a href="{% url 'blog:post_drafts' request.user.username %}">Drafts</a></p>
+    {% endif %}
     {% for post in posts %}
         <div class='post_view'>
             <p class='post_info'><a href="{% url 'coverTools:user_details' post.author %}">{{ post.author }}</a> | <a class="post_links" href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a> | {{ post.published_date }} </p>

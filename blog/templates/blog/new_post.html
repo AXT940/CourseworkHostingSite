@@ -4,7 +4,8 @@
     <h1>New Blog Post</h1>
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
+        <button type="submit" name="Save" value="SaveDraft" class="btn btn-default">Save</button>
     </form>
+    <br>
     <input type=button value="Return" class="back_link" onClick="javascript:history.go(-1);">
 {% endblock %}

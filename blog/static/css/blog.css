@@ -17,6 +17,10 @@ hr {
     font-size: 22px;
 }
 
+.post_content {
+    margin-left: 5px;
+}
+
 .post_links {
     color: #FF6C00;
 }

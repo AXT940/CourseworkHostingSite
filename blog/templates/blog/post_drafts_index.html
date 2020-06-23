@@ -1,0 +1,50 @@
+{% extends 'blog/blog_template.html' %}
+
+{% block content %}
+    <h2>Drafts</h2>
+    {% if not user.is_authenticated %}
+        <p>Log in to create and edit drafts.</p>
+        <button type="button" name="button" class="login button"><a href="{% url 'login' %}" class="button_link">Log in --></a></button><br>
+    {% endif %}
+
+    {% for draft in drafts %}
+        {% if draft.author == request.user and not edit_draft and not delete_draft %}
+            <a class="btn btn-default" href="{% url 'blog:new_post' %}"><span class="glyphicon glyphicon-plus"></span></a>
+        {% endif %}
+        <div class='post_view'>
+            <p class='post_info'><a href="{% url 'coverTools:user_details' draft.author %}">{{ draft.author }}</a> | {{ draft.title }}
+                {%  if draft.author == request.user and not delete_draft %}
+                    <a href="{% url 'blog:draft_delete' username=draft.author pk=draft.id %}"><span class="glyphicon glyphicon-trash"></span></a>
+                {% endif %}
+                {% if draft.author == request.user and not edit_draft %}
+                    <a href="{% url 'blog:draft_edit' pk=draft.id username=draft.author %}"><span class="glyphicon glyphicon-pencil"></span></a>
+                {% endif %}
+            </p>
+            {% if edit_draft and draft_to_edit_pk == draft.id %}
+                <form class="edit_post" method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input value="Save" type="Submit" class="btn btn-default">
+                </form>
+            {% elif delete_draft and draft_to_delete_pk == draft.id %}
+                <form class="delete_post" method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input value="Delete" type="Submit" class="btn btn-default">
+                </form>
+            {% else %}
+                <div class='post_content'>
+                    {{ draft.text | linebreaks }}
+                </div>
+                <a class="btn btn-default" href="{% url 'blog:publish' username=draft.author pk=draft.id %}">Publish</a>
+            {% endif %}
+        </div>
+        <hr>
+    {% empty %}
+        {% if user.is_authenticated %}
+            <p>You have created no drafts.</p>
+        {% endif %}
+    {% endfor %}
+    <br>
+    <input type=button value="Return" class="back_link" onClick="javascript:history.go(-1);">
+{% endblock %}

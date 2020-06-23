@@ -22,12 +22,14 @@
         </form>
     {% endif %}
 
-    <h3>Posted by: {{ post.author }} on {{ post.published_date }}</h3>
+    <h3>Posted by: {{ post.author }} on {% if post.published_date != None %} {{ post.published_date }} {% endif %}</h3>
     <h2><b>Title: {{ post.title }}</b></<h2>
     <div class='post_content'>
         <br><p>{{ post.text | linebreaks }}</p><br>
     </div>
-
+    {% if post.published_date == None %}
+        <a class="btn btn-default" href="{% url 'blog:publish' username=post.author pk=post.id %}">Publish</a>
+    {% endif %}
     <hr>
     {% if new_comment_writ %}
         <h3>Comments</h3>
@@ -59,7 +61,6 @@
             <p class="post_comment_text">{{ comment.text }}</p>
         {% endif %}
     {% endfor %}
-
     <br>
     <input type=button value="Return" class="back_link" onClick="javascript:history.go(-1);">
 {%endblock%}
