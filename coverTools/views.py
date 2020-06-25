@@ -34,7 +34,7 @@ def login(request, user):
 def user_details(request, username):
     user_name = username
     user = User.objects.get(username=user_name)
-    posts = Post.objects.all().filter(author=user).order_by('published_date')
+    posts = Post.objects.all().filter(author=user).exclude(published_date = None).order_by('published_date')
     pages = Paginator(posts, 10) #page of 10 posts each
     page_number = request.GET.get('page')
     objs_for_page = pages.get_page(page_number)

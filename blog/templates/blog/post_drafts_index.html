@@ -6,11 +6,12 @@
         <p>Log in to create and edit drafts.</p>
         <button type="button" name="button" class="login button"><a href="{% url 'login' %}" class="button_link">Log in --></a></button><br>
     {% endif %}
+    
+    {% if user.is_authenticated and not edit_draft and not delete_draft %}
+        <a class="btn btn-default" href="{% url 'blog:new_post' %}"><span class="glyphicon glyphicon-plus"></span></a>
+    {% endif %}
 
     {% for draft in drafts %}
-        {% if draft.author == request.user and not edit_draft and not delete_draft %}
-            <a class="btn btn-default" href="{% url 'blog:new_post' %}"><span class="glyphicon glyphicon-plus"></span></a>
-        {% endif %}
         <div class='post_view'>
             <p class='post_info'><a href="{% url 'coverTools:user_details' draft.author %}">{{ draft.author }}</a> | {{ draft.title }}
                 {%  if draft.author == request.user and not delete_draft %}
