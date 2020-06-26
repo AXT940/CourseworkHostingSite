@@ -22,7 +22,7 @@ def post_detail(request, pk):
 def new_post(request):
     #form = PostForm()
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -35,7 +35,7 @@ def new_post(request):
 def post_edit(request, pk):
         post = get_object_or_404(Post, pk=pk)
         if request.method == "POST":
-            form = PostForm(request.POST, instance=post)
+            form = PostForm(request.POST, request.FILES, instance=post)
             if form.is_valid():
                 post = form.save(commit=False)
                 post.author = request.user
@@ -109,7 +109,7 @@ def draft_edit(request, username, pk):
     drafts = Post.objects.filter(published_date__isnull=True).filter(author=request.user)
     draft_to_edit = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
-        form = PostForm(request.POST, instance=draft_to_edit)
+        form = PostForm(request.POST, request.FILES, instance=draft_to_edit)
         if form.is_valid():
             form.save(commit=False)
             draft_to_edit.author = request.user

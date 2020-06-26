@@ -6,14 +6,14 @@
         <p>Log in to create and edit drafts.</p>
         <button type="button" name="button" class="login button"><a href="{% url 'login' %}" class="button_link">Log in --></a></button><br>
     {% endif %}
-    
+
     {% if user.is_authenticated and not edit_draft and not delete_draft %}
         <a class="btn btn-default" href="{% url 'blog:new_post' %}"><span class="glyphicon glyphicon-plus"></span></a>
     {% endif %}
 
     {% for draft in drafts %}
         <div class='post_view'>
-            <p class='post_info'><a href="{% url 'coverTools:user_details' draft.author %}">{{ draft.author }}</a> | {{ draft.title }}
+            <p class='post_info'><a href="{% url 'coverTools:user_details' draft.author %}">{{ draft.author }}</a> | <a class="post_links" href="{% url 'blog:post_detail' pk=draft.id %}">{{ draft.title }}</a>
                 {%  if draft.author == request.user and not delete_draft %}
                     <a href="{% url 'blog:draft_delete' username=draft.author pk=draft.id %}"><span class="glyphicon glyphicon-trash"></span></a>
                 {% endif %}
@@ -36,6 +36,12 @@
             {% else %}
                 <div class='post_content'>
                     {{ draft.text | linebreaks }}
+                    {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="Image Failed To Load">
+                    {% endif %}
+                    {% if post.caption %}
+                        <p>{{ post.caption }}</p>
+                    {% endif %}
                 </div>
                 <a class="btn btn-default" href="{% url 'blog:publish' username=draft.author pk=draft.id %}">Publish</a>
             {% endif %}

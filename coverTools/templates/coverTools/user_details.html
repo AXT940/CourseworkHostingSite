@@ -6,7 +6,7 @@
     <p>Number of posts: {{ num_posts }}</p>
     <p>Last post: {{ last_post_date }}</p>
     {% if pagename == request.user.username %}
-        <p><a class="btn btn-default" href="{% url 'blog:new_post' %}"><span class="glyphicon glyphicon-plus"></span></a>&emsp; 
+        <p><a class="btn btn-default" href="{% url 'blog:new_post' %}"><span class="glyphicon glyphicon-plus"></span></a>&emsp;
         <a href="{% url 'blog:post_drafts' request.user.username %}">Drafts</a></p>
     {% endif %}
     {% for post in posts %}
@@ -14,6 +14,12 @@
             <p class='post_info'><a href="{% url 'coverTools:user_details' post.author %}">{{ post.author }}</a> | <a class="post_links" href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a> | {{ post.published_date }} </p>
             <div class='post_content'>
                 <p>{{ post.text | linebreaks }}</p>
+                {% if post.image %}
+                <img src="{{ post.image.url }}" alt="Image Failed To Load">
+                {% endif %}
+                {% if post.caption %}
+                    <p>{{ post.caption }}</p>
+                {% endif %}
             </div>
         </div>
         <hr>

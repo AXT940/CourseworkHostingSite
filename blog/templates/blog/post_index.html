@@ -9,6 +9,12 @@
                 <p class='post_info'><a href="{% url 'coverTools:user_details' post.author %}">{{ post.author }}</a> | <a class="post_links" href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a> | {{ post.published_date }} </p>
                 <div class='post_content'>
                     {{ post.text | linebreaks }}
+                    {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="Image Failed To Load">
+                    {% endif %}
+                    {% if post.caption %}
+                        <p>{{ post.caption }}</p>
+                    {% endif %}
                 </div>
             </div>
             <hr>
